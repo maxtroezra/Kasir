@@ -26,6 +26,7 @@
           </div>
           <button type="submit" class="btn btn-light">Login</button>
         </form>
+        <div v-if="errorMessage" class="text-red-500">{{ errorMessage }}</div>
       </div>
     </div>
     <div class="right-panel">
@@ -35,27 +36,33 @@
 </template>
 
 <script>
+// Import Vue Router
+import { useRouter } from "vue-router";
+
 export default {
   data() {
     return {
       username: "",
       password: "",
+      errorMessage: "",
     };
   },
   methods: {
     login() {
-      // Implement your login logic here
-      console.log("Username:", this.username);
-      console.log("Password:", this.password);
-      // Example: Redirect to another page after successful login
-      // window.location.href = '/dashboard';
+      // Simulate user authentication
+      if (this.username === "admin" && this.password === "123") {
+        // Example: Redirect to another page after successful login
+        // Assuming 'kasir' is the route name for kasir.vue component
+        this.$router.push({ name: "kasir" });
+      } else {
+        this.errorMessage = "Invalid username or password";
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-
 .login-box h2 {
   font-weight: bold;
 }
@@ -72,7 +79,7 @@ export default {
   align-items: center;
 }
 .left-panel {
-  background: #FAF3F0;
+  background: #faf3f0;
   color: black;
 }
 .right-panel {
