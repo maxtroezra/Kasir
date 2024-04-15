@@ -15,7 +15,8 @@
       <div class="col-lg-6 bg-light p-4">
         <h2 class="mb-4">Keranjang Belanja</h2>
         <ul class="list-group">
-          <li v-for="cartItem in cart" :key="cartItem.id" class="list-group-item d-flex justify-content-between align-items-center">
+          <li v-for="cartItem in cart" :key="cartItem.id"
+            class="list-group-item d-flex justify-content-between align-items-center">
             {{ cartItem.name }} - {{ cartItem.quantity }} pcs
             <button class="btn btn-danger btn-sm" @click="removeItemFromCart(cartItem)">Hapus</button>
           </li>
@@ -23,7 +24,8 @@
         <div class="mt-3">
           <span class="font-weight-bold">Total: Rp {{ total }}</span>
         </div>
-        <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan Pembayaran</button>
+        <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan
+          Pembayaran</button>
       </div>
     </div>
 
@@ -39,7 +41,8 @@
           </div>
           <div class="modal-body">
             <ul class="list-group">
-              <li v-for="cartItem in cart" :key="cartItem.id" class="list-group-item d-flex justify-content-between align-items-center">
+              <li v-for="cartItem in cart" :key="cartItem.id"
+                class="list-group-item d-flex justify-content-between align-items-center">
                 {{ cartItem.name }} - {{ cartItem.quantity }} pcs
               </li>
             </ul>
@@ -80,7 +83,7 @@ export default {
       if (cartItem) {
         cartItem.quantity++;
       } else {
-        this.cart.push({...item, quantity: 1});
+        this.cart.push({ ...item, quantity: 1 });
       }
     },
     removeItemFromCart(cartItem) {
