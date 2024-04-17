@@ -37,15 +37,18 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <ul class="list-group">
-              <li v-for="cartItem in cart" :key="cartItem.id" class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="modal-body" id="printableArea">
+            <h4>Invoice Details</h4>
+            <p>Date: {{ getCurrentDateTime }}</p>
+            <p>Items Purchased:</p>
+            <ul>
+              <li v-for="cartItem in cart" :key="cartItem.id">
                 {{ cartItem.name }} - {{ cartItem.quantity }} pcs
               </li>
             </ul>
-            <div class="mt-3">
-              <span class="font-weight-bold">Total: Rp {{ total }}</span>
-            </div>
+            <p>Total: Rp {{ total }}</p>
+            <p>Payment Amount: Rp {{ paymentAmount }}</p>
+            <p>Change: Rp {{ change }}</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="hideInvoiceModal">Tutup</button>
@@ -67,11 +70,17 @@ export default {
         { id: 3, name: 'Topi', price: 50000 }
       ],
       cart: [],
+      paymentAmount: 0,
+      change: 0
     };
   },
   computed: {
     total() {
       return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    },
+    getCurrentDateTime() {
+      const date = new Date();
+      return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     }
   },
   methods: {
@@ -98,6 +107,9 @@ export default {
       modal.classList.add('show');
       modal.style.display = 'block';
       document.body.classList.add('modal-open');
+
+      this.paymentAmount = 0;
+      this.change = 0;
     },
     hideInvoiceModal() {
       const modal = document.getElementById('invoiceModal');
@@ -106,18 +118,14 @@ export default {
       document.body.classList.remove('modal-open');
     },
     printInvoice() {
-      // Mendapatkan elemen modal
-      const modal = document.getElementById('invoiceModal');
-
-      // Menghapus kelas 'show' dan menutup modal
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-
-      // Menghapus kelas 'modal-open' dari body
-      document.body.classList.remove('modal-open');
-
-      // Mencetak modal
+      const printContents = document.getElementById('printableArea').innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
       window.print();
+      document.body.innerHTML = originalContents;
+    },
+    calculateChange() {
+      this.change = this.paymentAmount - this.total;
     }
   }
 };
