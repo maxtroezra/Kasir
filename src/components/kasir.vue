@@ -24,34 +24,32 @@
         <div class="mt-3">
           <span class="font-weight-bold">Total: Rp {{ total }}</span>
         </div>
-        <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan
-          Pembayaran</button>
+        <div class="mt-3">
+          <label for="paymentAmount">Jumlah Pembayaran:</label>
+          <input type="number" id="paymentAmount" v-model="paymentAmount" class="form-control">
+        </div>
+        <div class="mt-3">
+          <span class="font-weight-bold">Kembalian: Rp {{ change }}</span>
+        </div>
+        <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan Pembayaran</button>
       </div>
     </div>
 
     <!-- Invoice Modal -->
-    <div class="modal" id="invoiceModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Invoice</h5>
-            <button type="button" class="close" @click="hideInvoiceModal" aria-label="Close">
+            <h5 class="modal-title" id="invoiceModalLabel">Invoice</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="hideInvoiceModal">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-<<<<<<< HEAD
-          <div class="modal-body" id="printableArea">
-            <h4>Invoice Details</h4>
-            <p>Date: {{ getCurrentDateTime }}</p>
-            <p>Items Purchased:</p>
-            <ul>
-              <li v-for="cartItem in cart" :key="cartItem.id">
-=======
           <div class="modal-body">
             <ul class="list-group">
               <li v-for="cartItem in cart" :key="cartItem.id"
                 class="list-group-item d-flex justify-content-between align-items-center">
->>>>>>> 6d1ace3f6aa4537741342d76ac686160193357f0
                 {{ cartItem.name }} - {{ cartItem.quantity }} pcs
               </li>
             </ul>
@@ -60,7 +58,7 @@
             <p>Change: Rp {{ change }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="hideInvoiceModal">Tutup</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="hideInvoiceModal">Tutup</button>
             <button type="button" class="btn btn-primary" @click="printInvoice">Cetak</button>
           </div>
         </div>
@@ -86,10 +84,6 @@ export default {
   computed: {
     total() {
       return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    },
-    getCurrentDateTime() {
-      const date = new Date();
-      return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     }
   },
   methods: {
@@ -112,22 +106,17 @@ export default {
       }
     },
     showInvoiceModal() {
-      const modal = document.getElementById('invoiceModal');
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
+      const modal = new bootstrap.Modal(document.getElementById('invoiceModal'), {});
+      modal.show();
 
-      this.paymentAmount = 0;
-      this.change = 0;
+      this.calculateChange();
     },
     hideInvoiceModal() {
-      const modal = document.getElementById('invoiceModal');
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
+      const modal = new bootstrap.Modal(document.getElementById('invoiceModal'), {});
+      modal.hide();
     },
     printInvoice() {
-      const printContents = document.getElementById('printableArea').innerHTML;
+      const printContents = document.getElementById('invoiceModal').innerHTML;
       const originalContents = document.body.innerHTML;
       document.body.innerHTML = printContents;
       window.print();
