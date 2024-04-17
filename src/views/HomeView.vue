@@ -5,6 +5,6 @@ import kasir from "../components/kasir.vue";
 
 <template>
   <main>
-    <Login />
+    <kasir />
   </main>
 </template>
