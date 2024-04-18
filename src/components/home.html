@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belanja Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Font Awesome CSS -->
+    <style>
+        /* CSS untuk styling sidebar */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            padding: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #ccc;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #b379ff;
+        }
+
+        .sidebar .active {
+            background-color: #333;
+            color: white;
+        }
+
+        /* CSS untuk styling konten halaman */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        /* CSS untuk styling kotak pencarian */
+        .search-box {
+            display: flex
+        }
+
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-top-left-radius: 5px solid #ccc;
+            border-bottom-left-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            background-color: #b379ff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #b379ff;
+        }
+
+        /* CSS untuk grid layout */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            /* Tiga kolom dengan lebar yang disesuaikan dengan konten */
+            grid-gap: 10px;
+            /* Jarak antara tombol */
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            color: black;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #b379ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>NAMA TOKO</h3>
+        <a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="#" class="active"><i class="fas fa-cash-register"></i> Penjualan</a>
+        <a href="#" class="active"><i class="fas fa-truck"></i> Barang Masuk</a>
+        <a href="#" class="active"><i class="fas fa-box"></i> Stok</a>
+        <a href="#" class="active"><i class="fas fa-users"></i> Staff</a>
+    </div>
+
+    <!-- Konten Halaman -->
+    <div class="content">
+        <!-- Konten Utama -->
+        <h2>Selamat Datang di Halaman Belanja Online</h2>
+        <p>Ini adalah halaman utama dari aplikasi belanja online.</p>
+
+        <!-- Kotak Pencarian -->
+        <div class="search-box">
+            <input type="text" placeholder="Search..">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="button-grid">
+            <button class="button">Button 1</button>
+            <button class="button">Button 2</button>
+            <button class="button">Button 3</button>
+            <button class="button">Button 4</button>
+            <button class="button">Button 5</button>
+            <button class="button">Button 6</button>
+        </div>
+
+
+</body>
+
+</html>
