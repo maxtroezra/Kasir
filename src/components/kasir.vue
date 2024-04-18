@@ -31,7 +31,8 @@
         <div class="mt-3">
           <span class="font-weight-bold">Kembalian: Rp {{ change }}</span>
         </div>
-        <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan Pembayaran</button>
+        <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan
+          Pembayaran</button>
       </div>
     </div>
 
@@ -58,7 +59,8 @@
             <p>Change: Rp {{ change }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="hideInvoiceModal">Tutup</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              @click="hideInvoiceModal">Tutup</button>
             <button type="button" class="btn btn-primary" @click="printInvoice">Cetak</button>
           </div>
         </div>
