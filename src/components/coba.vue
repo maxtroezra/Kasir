@@ -1,3 +1,4 @@
+User
 <template>
     <div class="container mt-5">
         <h1 class="mb-4 text-center">Kasir App</h1>
@@ -16,57 +17,74 @@
                 </div>
             </div>
             <div class="col-lg-6 bg-light p-4">
-                <h2 class="mb-4">Keranjang Belanja</h2>
-                <ul class="list-group">
-                    <li v-for="cartItem in cart" :key="cartItem.id"
-                        class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ cartItem.name }} - {{ cartItem.quantity }} pcs
-                        <button class="btn btn-danger btn-sm" @click="removeItemFromCart(cartItem)">Hapus</button>
-                    </li>
-                </ul>
-                <div class="mt-3">
-                    <span class="font-weight-bold">Total: Rp {{ total }}</span>
+                <h2 class="mb-4">Tambah Item Baru</h2>
+                <div class="form-group">
+                    <label for="itemId">ID Barang:</label>
+                    <input type="text" class="form-control" id="itemId" v-model="newItem.id">
                 </div>
-                <div class="mt-3">
-                    <label for="paymentAmount">Jumlah Pembayaran:</label>
-                    <input type="number" id="paymentAmount" v-model="paymentAmount" class="form-control">
+                <div class="form-group">
+                    <label for="itemName">Nama Barang:</label>
+                    <input type="text" class="form-control" id="itemName" v-model="newItem.name">
                 </div>
-                <div class="mt-3">
-                    <span class="font-weight-bold">Kembalian: Rp {{ change }}</span>
+                <div class="form-group">
+                    <label for="itemPrice">Harga Barang:</label>
+                    <input type="text" class="form-control" id="itemPrice" v-model="newItem.price">
                 </div>
-                <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan
-                    Pembayaran</button>
+                <button class="btn btn-success" @click="addItem">Tambahkan</button>
             </div>
         </div>
 
-        <!-- Modal Tambah Item Baru -->
-        <div class="modal" id="addItemModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Item Baru</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="newItemId">ID Barang:</label>
-                            <input type="text" class="form-control" id="newItemId" v-model="newItem.id">
-                        </div>
-                        <div class="form-group">
-                            <label for="newItemName">Nama Barang:</label>
-                            <input type="text" class="form-control" id="newItemName" v-model="newItem.name">
-                        </div>
-                        <div class="form-group">
-                            <label for="newItemPrice">Harga Barang:</label>
-                            <input type="text" class="form-control" id="newItemPrice" v-model="newItem.price">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" @click="addItem">Tambahkan</button>
-                    </div>
+        <div class="col-lg-6 bg-light p-4">
+            <h2 class="mb-4">Keranjang Belanja</h2>
+            <ul class="list-group">
+                <li v-for="cartItem in cart" :key="cartItem.id"
+                    class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ cartItem.name }} - {{ cartItem.quantity }} pcs
+                    <button class="btn btn-danger btn-sm" @click="removeItemFromCart(cartItem)">Hapus</button>
+                </li>
+            </ul>
+            <div class="mt-3">
+                <span class="font-weight-bold">Total: Rp {{ total }}</span>
+            </div>
+            <div class="mt-3">
+                <label for="paymentAmount">Jumlah Pembayaran:</label>
+                <input type="number" id="paymentAmount" v-model="paymentAmount" class="form-control">
+            </div>
+            <div class="mt-3">
+                <span class="font-weight-bold">Kembalian: Rp {{ change }}</span>
+            </div>
+            <button v-if="cart.length > 0" class="btn btn-primary mt-3" @click="showInvoiceModal">Selesaikan
+                Pembayaran</button>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="invoiceModalLabel">Invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        @click="hideInvoiceModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li v-for="cartItem in cart" :key="cartItem.id"
+                            class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ cartItem.name }} - {{ cartItem.quantity }} pcs
+                        </li>
+                    </ul>
+                    <p>Total: Rp {{ total }}</p>
+                    <p>Payment Amount: Rp {{ paymentAmount }}</p>
+                    <p>Change: Rp {{ change }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        @click="hideInvoiceModal">Tutup</button>
+                    <button type="button" class="btn btn-primary" @click="printInvoice">Cetak</button>
                 </div>
             </div>
         </div>
@@ -106,7 +124,6 @@ export default {
                 this.newItem.id = '';
                 this.newItem.name = '';
                 this.newItem.price = '';
-                $('#addItemModal').modal('hide'); // Hide modal after adding item
             } else {
                 alert('Silakan isi semua informasi item');
             }
@@ -148,13 +165,11 @@ export default {
         },
         calculateChange() {
             this.change = this.paymentAmount - this.total;
-        },
-        showAddItemModal() {
-            $('#addItemModal').modal('show'); // Show modal for adding new item
         }
     }
 }
 </script>
+
 
 <style>
 /* CSS Bootstrap atau gaya kustom Anda dapat ditempatkan di sini */
