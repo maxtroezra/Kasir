@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue"
 import kasir from "../components/kasir.vue";
+import Coba from "@/components/coba.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,6 +10,11 @@ const router = createRouter({
       path: "/kasir",
       name: "kasir",
       component: kasir,
+    },
+    {
+      path: "/coba",
+      name: "coba",
+      component: Coba,
     },
     {
       path: "/",

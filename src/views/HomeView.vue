@@ -6,6 +6,6 @@ import coba from "../components/coba.vue";
 
 <template>
   <main>
-    <coba />
+    <login />
   </main>
 </template>

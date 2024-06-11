@@ -53,7 +53,7 @@ export default {
       if (this.username === "admin" && this.password === "123") {
         // Example: Redirect to another page after successful login
         // Assuming 'kasir' is the route name for kasir.vue component
-        this.$router.push({ name: "kasir" });
+        this.$router.push({ name: "coba" });
       } else {
         this.errorMessage = "Invalid username or password";
       }
